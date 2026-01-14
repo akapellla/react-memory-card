@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Card from "./components/Card";
-import { createClient } from "pexels";
 
 function App() {
   const [cards, setCards] = React.useState([]);
@@ -42,18 +41,47 @@ function App() {
     });
   };
 
-  const client = createClient(import.meta.env.VITE_PEXELS_API_KEY);
   const query = "Cars bmw";
 
   React.useEffect(() => {
-    client.photos.search({ query, per_page: 12 }).then((data) => {
-      const image = data.photos.map((photo) => ({
-        id: photo.id,
-        src: photo.src.medium,
-        alt: `${photo.alt}`,
-      }));
-      setCards(image);
-    });
+    const apiKey = import.meta.env.VITE_PEXELS_API_KEY;
+
+    const load = async () => {
+      try {
+        const query = "Cars bmw";
+        const res = await fetch(
+          `https://api.pexels.com/v1/search?query=${encodeURIComponent(
+            query
+          )}&per_page=12`,
+          {
+            headers: {
+              Authorization: apiKey,
+            },
+          }
+        );
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const data = await res.json();
+
+        setCards(
+          data.photos.map((photo) => ({
+            id: String(photo.id),
+            src: photo.src.medium,
+            alt: photo.alt || "Pexels photo",
+          }))
+        );
+      } catch (e) {
+        console.error("Pexels fetch error:", e);
+      }
+    };
+
+    if (!apiKey) {
+      console.error("VITE_PEXELS_API_KEY is missing");
+      return;
+    }
+
+    load();
   }, []);
 
   return (
