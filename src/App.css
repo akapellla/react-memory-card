@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: rgb(165, 37, 144);
+  font-family: "Inter";
+}
+
+.wrapper {
+  padding: 20px;
+}
+.cards {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}

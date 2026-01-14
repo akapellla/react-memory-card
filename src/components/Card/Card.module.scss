@@ -1,0 +1,17 @@
+.card {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-7px);
+  }
+
+  img {
+    display: block;
+    width: 290px;
+    height: 300px;
+    border-radius: 25px;
+  }
+}

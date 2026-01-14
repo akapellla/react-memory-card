@@ -1,0 +1,17 @@
+header {
+  display: flex;
+  flex-direction: column;
+
+  .headerTop {
+    h1 {
+    }
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .headerBot {
+    margin-top: 30px;
+
+    margin-bottom: 30px;
+  }
+}
